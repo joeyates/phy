@@ -2,6 +2,7 @@ defmodule Phy.Generate.LiveView do
   require Logger
 
   @phy_file Application.compile_env(:phy, :file, Phy.File)
+  @phy_mix Application.compile_env(:phy, :mix, Phy.Mix)
   @phy_mix_project Application.compile_env(:phy, :mix_project, Phy.Mix.Project)
 
   @callback run([String.t()]) :: :ok
@@ -15,6 +16,14 @@ defmodule Phy.Generate.LiveView do
     test_directory = Path.dirname(test_path)
     @phy_file.mkdir_p(test_directory)
     @phy_file.write!(test_path, live_view_test_content(name))
+    shell = @phy_mix.shell()
+    shell.info(
+      """
+      Add the following route to your router:
+
+          live "/#{name}", #{live_view_name(name)}, :index
+      """
+    )
     :ok
   end
 
