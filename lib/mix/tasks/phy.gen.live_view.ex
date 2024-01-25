@@ -4,7 +4,11 @@ defmodule Mix.Tasks.Phy.Gen.LiveView do
                           :generate_live_view,
                           Phy.Generate.LiveView
                         )
-  def run(args) do
-    @generate_live_view.run(args)
+  def run([name]) do
+    @generate_live_view.run(name)
+  end
+
+  def run(_args) do
+    raise "Please supply a name for the LiveView"
   end
 end
