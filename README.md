@@ -1,6 +1,19 @@
 # Phy
 
-**TODO: Add description**
+Phy provides a number of generators for Elixir Phoenix projects.
+
+The generators are "opinionated" - you need to buy in to the library's approach
+to use them.
+
+For example, an `ok/1` helper is provided for live view returns,
+allowing you to do this:
+
+```ex
+def mount(_params, _session, socket) do
+  socket
+  |> ok()
+end
+```
 
 ## Installation
 
@@ -18,4 +31,3 @@ end
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/phy>.
-
