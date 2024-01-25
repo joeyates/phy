@@ -7,7 +7,9 @@ defmodule Phy.Generate.LiveViewTest do
   setup do
     stub(Phy.FileMock, :mkdir_p, fn _ -> :ok end)
     stub(Phy.FileMock, :write!, fn _, _ -> :ok end)
-    stub(Phy.ProjectMock, :config, fn -> %{app: :my_app} end)
+    stub(Phy.MixMock, :shell, fn -> Mix.ShellMock end)
+    stub(Phy.Mix.ProjectMock, :config, fn -> %{app: :my_app} end)
+    stub(Mix.ShellMock, :info, fn _ -> :ok end)
 
     :ok
   end
@@ -42,5 +44,21 @@ defmodule Phy.Generate.LiveViewTest do
     expect(Phy.FileMock, :write!, fn "test/my_app_web/live/bar/name_live_test.exs", _ -> :ok end)
 
     Phy.Generate.LiveView.run("bar/name")
+  end
+
+  test "it tells the user to add the route" do
+    expect(Mix.ShellMock, :info, fn message ->
+      send(self(), {Mix.ShellMock, :info, message})
+      :ok
+    end)
+
+    Phy.Generate.LiveView.run("bar/name")
+
+    expected = """
+    Add the following route to your router:
+
+        live \"/bar/name\", Bar.NameLive, :index
+    """
+    assert_receive {Mix.ShellMock, :info, ^expected}
   end
 end

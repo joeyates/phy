@@ -2,11 +2,12 @@ defmodule Phy.Generate.LiveView do
   require Logger
 
   @phy_file Application.compile_env(:phy, :file, Phy.File)
-  @phy_project Application.compile_env(:phy, :project, Phy.Project)
+  @phy_mix Application.compile_env(:phy, :mix, Phy.Mix)
+  @phy_mix_project Application.compile_env(:phy, :mix_project, Phy.Mix.Project)
 
   @callback run([String.t()]) :: :ok
   def run(name) do
-    app = @phy_project.config()[:app]
+    app = @phy_mix_project.config()[:app]
     view_path = Path.join(["lib", "#{app}_web", "live", "#{name}_live.ex"])
     view_directory = Path.dirname(view_path)
     @phy_file.mkdir_p(view_directory)
@@ -15,6 +16,14 @@ defmodule Phy.Generate.LiveView do
     test_directory = Path.dirname(test_path)
     @phy_file.mkdir_p(test_directory)
     @phy_file.write!(test_path, live_view_test_content(name))
+    shell = @phy_mix.shell()
+    shell.info(
+      """
+      Add the following route to your router:
+
+          live "/#{name}", #{live_view_name(name)}, :index
+      """
+    )
     :ok
   end
 
@@ -55,7 +64,7 @@ defmodule Phy.Generate.LiveView do
 
   defp live_view_test_content(name) do
     module =
-      @phy_project.config()[:app]
+      @phy_mix_project.config()[:app]
       |> Atom.to_string()
       |> Macro.camelize()
 
@@ -78,7 +87,7 @@ defmodule Phy.Generate.LiveView do
   end
 
   defp module do
-    @phy_project.config()[:app]
+    @phy_mix_project.config()[:app]
     |> Atom.to_string()
     |> Macro.camelize()
   end

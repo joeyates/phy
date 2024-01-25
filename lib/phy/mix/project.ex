@@ -1,4 +1,4 @@
-defmodule Phy.Project do
+defmodule Phy.Mix.Project do
   @callback config() :: map()
   @callback config(any()) :: map()
   def config(mix_project \\ Mix.Project) do

@@ -4,12 +4,12 @@ defmodule MixProjectMock do
   end
 end
 
-defmodule Phy.ProjectTest do
+defmodule Phy.Mix.ProjectTest do
   use ExUnit.Case, async: true
 
   describe "config/0" do
     test "it reads the config" do
-      assert Phy.Project.config(MixProjectMock) == %{the: :config}
+      assert Phy.Mix.Project.config(MixProjectMock) == %{the: :config}
     end
   end
 end
