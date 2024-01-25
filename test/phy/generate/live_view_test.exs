@@ -7,7 +7,7 @@ defmodule Phy.Generate.LiveViewTest do
   setup do
     stub(Phy.FileMock, :mkdir_p, fn _ -> :ok end)
     stub(Phy.FileMock, :write!, fn _, _ -> :ok end)
-    stub(Phy.ProjectMock, :config, fn -> %{app: :my_app} end)
+    stub(Phy.Mix.ProjectMock, :config, fn -> %{app: :my_app} end)
 
     :ok
   end
