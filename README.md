@@ -17,6 +17,7 @@ end
 
 # Generators
 
+* `phy.gen.http_client`
 * `phy.gen.live_view`
 
 # Name

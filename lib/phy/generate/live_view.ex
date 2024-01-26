@@ -5,9 +5,9 @@ defmodule Phy.Generate.LiveView do
   @phy_mix Application.compile_env(:phy, :mix, Phy.Mix)
   @phy_mix_project Application.compile_env(:phy, :mix_project, Phy.Mix.Project)
 
-  @callback run([String.t()]) :: :ok
+  @callback run(String.t()) :: :ok
   def run(name) do
-    app = @phy_mix_project.config()[:app]
+    app = @phy_mix_project.app()
     view_path = Path.join(["lib", "#{app}_web", "live", "#{name}_live.ex"])
     view_directory = Path.dirname(view_path)
     @phy_file.mkdir_p(view_directory)
@@ -63,11 +63,7 @@ defmodule Phy.Generate.LiveView do
   end
 
   defp live_view_test_content(name) do
-    module =
-      @phy_mix_project.config()[:app]
-      |> Atom.to_string()
-      |> Macro.camelize()
-
+    module = @phy_mix_project.module()
     web_module = "#{module}Web"
     live_view_name = "#{Macro.camelize(name)}Live"
 
@@ -87,7 +83,7 @@ defmodule Phy.Generate.LiveView do
   end
 
   defp module do
-    @phy_mix_project.config()[:app]
+    @phy_mix_project.app()
     |> Atom.to_string()
     |> Macro.camelize()
   end
