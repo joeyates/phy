@@ -15,6 +15,14 @@ def mount(_params, _session, socket) do
 end
 ```
 
+# Generators
+
+* `phy.gen.live_view`
+
+# Name
+
+`phy` follows `phx`!
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
