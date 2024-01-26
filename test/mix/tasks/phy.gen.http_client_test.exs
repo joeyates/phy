@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Phy.Gen.HttpClientTest do
+defmodule Mix.Tasks.Phy.Gen.HTTPClientTest do
   use ExUnit.Case, async: true
   import Mox
 
