@@ -1,0 +1,14 @@
+defmodule <%= @module %>.HTTPClient do
+  @callback get(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
+  @callback get(String.t(), any()) :: {:ok, String.t()} | {:error, Atom.t()}
+  def get(url, req \\\\ Req) do
+    case req.get(url) do
+      {:ok, %Req.Response{status: 200} = response} ->
+        {:ok, response.body}
+      {:ok, %Req.Response{status: 404}} ->
+        {:error, :not_found}
+      {:error, _error} ->
+        {:error, :not_found}
+    end
+  end
+end

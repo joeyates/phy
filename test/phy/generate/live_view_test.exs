@@ -10,6 +10,7 @@ defmodule Phy.Generate.LiveViewTest do
     stub(Phy.MixMock, :shell, fn -> Mix.ShellMock end)
     stub(Phy.Mix.ProjectMock, :app, fn -> :my_app end)
     stub(Phy.Mix.ProjectMock, :module, fn -> :MyApp end)
+    stub(Phy.Mix.ProjectMock, :web_module, fn -> :MyAppWeb end)
     stub(Mix.ShellMock, :info, fn _ -> :ok end)
 
     :ok

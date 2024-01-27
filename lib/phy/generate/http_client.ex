@@ -1,6 +1,11 @@
 defmodule Phy.Generate.HTTPClient do
   @phy_file Application.compile_env(:phy, :file, Phy.File)
   @phy_mix_project Application.compile_env(:phy, :mix_project, Phy.Mix.Project)
+  @project_root Path.expand("../../..", __DIR__)
+  @templates_path Path.join([@project_root, "priv", "templates"])
+  for f <- ~w(http_client.ex.eex http_client_test.exs.eex) do
+    @external_resource Path.join(@templates_path, f)
+  end
 
   @callback run() :: :ok
   def run do
@@ -14,66 +19,13 @@ defmodule Phy.Generate.HTTPClient do
 
   defp client_content do
     module = @phy_mix_project.module()
-    ~s"""
-    defmodule #{module}.HTTPClient do
-      @callback get(String.t()) :: {:ok, String.t()} | {:error, Atom.t()}
-      @callback get(String.t(), any()) :: {:ok, String.t()} | {:error, Atom.t()}
-      def get(url, req \\\\ Req) do
-        case req.get(url) do
-          {:ok, %Req.Response{status: 200} = response} ->
-            {:ok, response.body}
-          {:ok, %Req.Response{status: 404}} ->
-            {:error, :not_found}
-          {:error, _error} ->
-            {:error, :not_found}
-        end
-      end
-    end
-    """
+    client_path = Path.join(@templates_path, "http_client.ex.eex")
+    EEx.eval_file(client_path, assigns: %{module: module})
   end
 
   def test_content do
     module = @phy_mix_project.module()
-    ~s"""
-    defmodule MockHTTPClient do
-      @behaviour #{module}.HTTPClient
-
-      def get("https://www.example.com") do
-        {:ok, %Req.Response{status: 200, body: "Some HTML"}}
-      end
-
-      def get("https://www.doesntexist.com/some/path") do
-        {:ok, %Req.Response{status: 404}}
-      end
-
-      def get("https://return.error") do
-        {:error, "Boom!"}
-      end
-
-      @doc \"\"\"
-      It makes no sense to mock get/2, as it is simply for testing
-      \"\"\"
-      def get(_url, _mock), do: nil
-    end
-
-    defmodule #{module}.HttpClientTest do
-      use #{module}.DataCase
-
-      alias #{module}.HTTPClient
-
-      test "get returns the body of the response" do
-        {:ok, body} = HTTPClient.get("https://www.example.com", MockHTTPClient)
-        assert String.contains?(body, "Some HTML")
-      end
-
-      test "get returns :not_found when the response is 404" do
-        {:error, :not_found} = HTTPClient.get("https://www.doesntexist.com/some/path", MockHTTPClient)
-      end
-
-      test "get returns :not_found for other errors" do
-        {:error, :not_found} = HTTPClient.get("https://return.error", MockHTTPClient)
-      end
-    end
-    """
+    test_path = Path.join(@templates_path, "http_client_test.exs.eex")
+    EEx.eval_file(test_path, assigns: %{module: module})
   end
 end
