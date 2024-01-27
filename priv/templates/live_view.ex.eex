@@ -1,0 +1,26 @@
+defmodule #{web_module}.#{live_view_name} do
+  use #{web_module}, :live_view
+
+  @impl true
+  @spec mount(params :: map(), session :: map(), socket :: Phoenix.LiveView.Socket.t()) :: {:ok, Phoenix.LiveView.Socket.t()}
+  def mount(_params, _session, socket) do
+    socket
+    |> ok()
+  end
+
+  @impl true
+  @spec handle_params(params :: map(), url :: String.t(), socket :: Phoenix.LiveView.Socket.t()) :: {:noreply, Phoenix.LiveView.Socket.t()}
+  def handle_params(_params, _url, socket) do
+    socket
+    |> noreply()
+  end
+
+  @impl true
+  def render(assigns) do
+    ~H\"\"\"
+    <.header>
+    <p>#{name}</p>
+    </.header>
+    \"\"\"
+  end
+end

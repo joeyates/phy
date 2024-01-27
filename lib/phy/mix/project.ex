@@ -16,4 +16,11 @@ defmodule Phy.Mix.Project do
     |> Atom.to_string()
     |> Macro.camelize()
   end
+
+  @callback web_module() :: atom()
+  def web_module do
+    app()
+    |> tap(&"#{&1}_web")
+    |> Macro.camelize()
+  end
 end
