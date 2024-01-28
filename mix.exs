@@ -1,14 +1,30 @@
 defmodule Phy.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @scm_url "https://github.com/joeyates/phy"
+
   def project do
     [
       app: :phy,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: [
+        maintainers: ["Joe Yates"],
+        licenses: ["MIT"],
+        links: %{"GitHub" => @scm_url},
+        files: ~w(lib templates mix.exs README.md)
+      ],
+      preferred_cli_env: [docs: :docs],
+      source_url: @scm_url,
+      docs: docs(),
+      homepage_url: @scm_url,
+      description: """
+      Phy provides a number of generators for Elixir Phoenix projects.
+      """
     ]
   end
 
@@ -24,6 +40,15 @@ defmodule Phy.MixProject do
   defp deps do
     [
       {:mox, ">= 0.0.0", only: :test}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: ["README.md"],
+      homepage_url: @scm_url,
+      source_ref: "v#{@version}",
+      source_url: @scm_url
     ]
   end
 end
