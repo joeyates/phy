@@ -20,7 +20,7 @@ defmodule Phy.Mix.Project do
   @callback web_module() :: atom()
   def web_module do
     app()
-    |> tap(&"#{&1}_web")
+    |> then(&"#{&1}_web")
     |> Macro.camelize()
   end
 end
