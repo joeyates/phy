@@ -16,7 +16,7 @@ defmodule Phy.MixProject do
         maintainers: ["Joe Yates"],
         licenses: ["MIT"],
         links: %{"GitHub" => @scm_url},
-        files: ~w(lib templates mix.exs README.md)
+        files: ~w(lib templates mix.exs README.md LICENSE)
       ],
       preferred_cli_env: [docs: :docs],
       source_url: @scm_url,
