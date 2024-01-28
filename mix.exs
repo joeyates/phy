@@ -39,6 +39,7 @@ defmodule Phy.MixProject do
 
   defp deps do
     [
+      {:ex_doc, "~> 0.31", only: :dev},
       {:mox, ">= 0.0.0", only: :test}
     ]
   end
