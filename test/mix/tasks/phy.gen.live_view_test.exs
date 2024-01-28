@@ -5,7 +5,7 @@ defmodule Mix.Tasks.Phy.Gen.LiveViewTest do
   setup :verify_on_exit!
 
   test "it runs the generator" do
-    expect(Phy.Generate.LiveViewMock, :run, fn "name" -> {:ok} end)
+    expect(Phy.Generate.LiveViewMock, :run, fn "name" -> :ok end)
 
     Mix.Tasks.Phy.Gen.LiveView.run(["name"])
   end
