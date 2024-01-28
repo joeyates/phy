@@ -1,0 +1,37 @@
+defmodule <%= @web_module %>.ReplyHelpers do
+  @moduledoc """
+  Reply to liveview calls by piping the socket through a helper
+
+  Ensure that you have the following in lib/<%= @app %>_web.ex:
+
+      def live_view do
+        quote do
+          ...
+          import <%= @web_module %>.ReplyHelpers
+          ...
+  """
+
+  @doc ~S"""
+  Returns `{:ok, socket}`
+
+    iex> import <%= @web_module %>.ReplyHelpers
+    ...> socket = %Phoenix.LiveView.Socket{}
+    ...> socket
+    ...> |> ok()
+    {:ok, socket}
+  """
+  @spec ok(socket :: Phoenix.LiveView.Socket.t()) :: {:ok, Phoenix.LiveView.Socket.t()}
+  def ok(socket), do: {:ok, socket}
+
+  @doc ~S"""
+  Returns `{:noreply, socket}`
+
+    iex> import <%= @web_module %>.ReplyHelpers
+    ...> socket = %Phoenix.LiveView.Socket{}
+    ...> socket
+    ...> |> noreply()
+    {:noreply, socket}
+  """
+  @spec noreply(socket :: Phoenix.LiveView.Socket.t()) :: {:noreply, Phoenix.LiveView.Socket.t()}
+  def noreply(socket), do: {:noreply, socket}
+end
