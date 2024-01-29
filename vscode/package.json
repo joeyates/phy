@@ -12,10 +12,10 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
+    "snippets": [
       {
-        "command": "phy.helloWorld",
-        "title": "Hello World"
+        "language": "elixir",
+        "path": "./snippets/elixir.json"
       }
     ]
   },
