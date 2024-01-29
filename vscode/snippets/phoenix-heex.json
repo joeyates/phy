@@ -9,13 +9,23 @@
       "  </:actions>",
       "</.simple_form>"
     ],
-    "description": "Create a LiveView form"
+    "description": [
+      "Create a LiveView form.",
+      "Placeholder 1: the lowercase form name,",
+      "Placeholder 2: the save action, defaults to \"save\",",
+      "Placeholder 3: the text to be shown while submitting, defaults to \"Saving...\",",
+      "Placeholder 4: the save button label, defaults to \"Save\"."
+    ]
   },
   "LiveView input text": {
     "prefix": "lvinputtext",
     "body": [
-      "<.input field={@form[:$1]} type=\"text\" label=\"$2\" />"
+      "<.input field={@form[:${1:field}]} type=\"text\" label=\"${2:Label}\" />"
     ],
-    "description": "Create a LiveView input text"
+    "description": [
+      "Create a LiveView input text.",
+      "Placeholder 1: the lowercase field name,",
+      "Placeholder 2: the label."
+    ]
   }
 }
