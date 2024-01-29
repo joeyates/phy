@@ -16,6 +16,10 @@
       {
         "language": "elixir",
         "path": "./snippets/elixir.json"
+      },
+      {
+        "language": "phoenix-heex",
+        "path": "./snippets/phoenix-heex.json"
       }
     ]
   },

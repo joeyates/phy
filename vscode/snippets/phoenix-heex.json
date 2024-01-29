@@ -1,0 +1,21 @@
+{
+  "LiveView form": {
+    "prefix": "lvform",
+    "body": [
+      "<.simple_form for={@form} id=\"${1:name}-form\" phx-change=\"validate\" phx-submit=\"${2:save}\">",
+      "  $0",
+      "  <:actions>",
+      "    <.button phx-disable-with=\"${3:Saving}...\">${4:Save}</.button>",
+      "  </:actions>",
+      "</.simple_form>"
+    ],
+    "description": "Create a LiveView form"
+  },
+  "LiveView input text": {
+    "prefix": "lvinputtext",
+    "body": [
+      "<.input field={@form[:$1]} type=\"text\" label=\"$2\" />"
+    ],
+    "description": "Create a LiveView input text"
+  }
+}
