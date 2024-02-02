@@ -12,6 +12,90 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "commands": [
+      {
+        "command": "extension.phy.switch",
+        "title": "Switch between test and implementation files"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Phy",
+      "properties": {
+        "Phy.elixir.implementationMatcher": {
+          "type": "string",
+          "default": "lib\\/(.*?)\\.ex$",
+          "description": [
+            "A regular expression to match Elixir implementation files.",
+            "It's captures must match those in implementationReplacer"
+          ]
+        },
+        "Phy.elixir.implementationReplacer": {
+          "type": "string",
+          "default": "test/$1_test.exs",
+          "description": [
+            "A string to replace the captures from Phy.elixir.implementationMatcher",
+            "to get the test file"
+          ]
+        },
+        "Phy.elixir.testMatcher": {
+          "type": "string",
+          "default": "test\\/(.*?)_test\\.exs$",
+          "description": [
+            "A regular expression to match the test file",
+            "It's captures must match those in testReplacer"
+          ]
+        },
+        "Phy.elixir.testReplacer": {
+          "type": "string",
+          "default": "lib/$1.ex",
+          "description": [
+            "A string to replace the captures from testMatcher",
+            "to get the implementation file"
+          ]
+        },
+        "Phy.ruby.implementationMatcher": {
+          "type": "string",
+          "default": "lib\\/(.*?)\\.rb$",
+          "description": [
+            "A regular expression to match Ruby implementation files.",
+            "It's captures must match those in implementationReplacer"
+          ]
+        },
+        "Phy.ruby.implementationReplacer": {
+          "type": "string",
+          "default": "test/$1_test.rb",
+          "description": [
+            "A string to replace the captures from implementationMatcher",
+            "to get the test file"
+          ]
+        },
+        "Phy.ruby.testMatcher": {
+          "type": "string",
+          "default": "test\\/(.*?)_test\\.rb$",
+          "description": [
+            "A regular expression to match the test file",
+            "It's captures must match those in testReplacer"
+          ]
+        },
+        "Phy.ruby.testReplacer": {
+          "type": "string",
+          "default": "lib/$1.rb",
+          "description": [
+            "A string to replace the captures from testMatcher",
+            "to get the implementation file"
+          ]
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "extension.phy.switch",
+        "key": "ctrl+`",
+        "mac": "cmd+`",
+        "when": "editorTextFocus"
+      }
+    ],
     "snippets": [
       {
         "language": "elixir",
