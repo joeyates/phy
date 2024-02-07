@@ -85,6 +85,38 @@
             "A string to replace the captures from testMatcher",
             "to get the implementation file"
           ]
+        },
+        "Phy.typescript.implementationMatcher": {
+          "type": "string",
+          "default": "(.*?)\\/([^\\/]+)\\.ts$",
+          "description": [
+            "A regular expression to match Typescript implementation files.",
+            "It's captures must match those in implementationReplacer"
+          ]
+        },
+        "Phy.typescript.implementationReplacer": {
+          "type": "string",
+          "default": "$1/test/$2.test.ts",
+          "description": [
+            "A string to replace the captures from implementationMatcher",
+            "to get the test file"
+          ]
+        },
+        "Phy.typescript.testMatcher": {
+          "type": "string",
+          "default": "test\\/(.*?)\\.test\\.ts$",
+          "description": [
+            "A regular expression to match Typescript test files.",
+            "It's captures must match those in testReplacer"
+          ]
+        },
+        "Phy.typescript.testReplacer": {
+          "type": "string",
+          "default": "$1.ts",
+          "description": [
+            "A string to replace the captures from testMatcher",
+            "to get the implementation file"
+          ]
         }
       }
     },

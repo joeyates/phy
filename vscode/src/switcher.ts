@@ -27,7 +27,7 @@ class Switcher {
     return this.knownLanguages.includes(this.languageId);
   }
 
-  knownLanguages: string[] = ['elixir', 'ruby'];
+  knownLanguages: string[] = ['elixir', 'ruby', 'typescript'];
 
   other(): string | null {
     if (!this.isKnownLanguage()) {
