@@ -1,5 +1,5 @@
-defmodule #{@web_module}.#{@live_view_module}Test do
-  use #{@web_module}.ConnCase
+defmodule <%= @web_module %>.<%= @live_view_module %>Test do
+  use <%= @web_module %>.ConnCase
 
   import Phoenix.LiveViewTest
 

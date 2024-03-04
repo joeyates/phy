@@ -9,24 +9,32 @@ defmodule Mix.Tasks.Phy.Gen.LiveViewTest do
   test "it creates the directory for the live_view", config do
     in_tmp_project(config, fn ->
       LiveView.run(["bar/name"])
+
+      assert_dir "lib/my_app_web/live/bar"
     end)
   end
 
   test "it creates the live_view", config do
     in_tmp_project(config, fn ->
       LiveView.run(["bar/name"])
+
+      assert_file "lib/my_app_web/live/bar/name_live.ex", ~r[defmodule MyAppWeb.Bar.NameLive do]
     end)
   end
 
   test "it creates the directory for the test", config do
     in_tmp_project(config, fn ->
       LiveView.run(["bar/name"])
+
+      assert_dir "test/my_app_web/live/bar"
     end)
   end
 
   test "it creates the test", config do
     in_tmp_project(config, fn ->
       LiveView.run(["bar/name"])
+
+      assert_file "test/my_app_web/live/bar/name_live_test.exs", ~r[defmodule MyAppWeb.Bar.NameLiveTest do]
     end)
   end
 

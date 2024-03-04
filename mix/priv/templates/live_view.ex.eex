@@ -1,5 +1,5 @@
-defmodule #{web_module}.#{live_view_module} do
-  use #{web_module}, :live_view
+defmodule <%= @web_module %>.<%= @live_view_module %> do
+  use <%= @web_module %>, :live_view
 
   @impl true
   @spec mount(params :: map(), session :: map(), socket :: Phoenix.LiveView.Socket.t()) :: {:ok, Phoenix.LiveView.Socket.t()}
@@ -19,7 +19,7 @@ defmodule #{web_module}.#{live_view_module} do
   def render(assigns) do
     ~H\"\"\"
     <.header>
-    <p>#{name}</p>
+    <p><%= @name %></p>
     </.header>
     \"\"\"
   end
