@@ -2,8 +2,6 @@ defmodule Phy.Mix.Project do
   @moduledoc """
   This module wraps access to Mix.Project,
   allowing for easier mocking elsewhere in the project.
-  While the rest of the project uses Mox, this wrapper uses
-  dependency injection as its testing/mocking approach.
   """
   @callback config() :: map()
   @callback config(mix_project :: Mix.Project) :: map()
