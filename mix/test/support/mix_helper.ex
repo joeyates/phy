@@ -3,22 +3,31 @@
 defmodule MixHelper do
   import ExUnit.Assertions
 
-  def in_tmd_dir(%{tmp_dir: tmp_dir}, function) do
-    File.cd!(tmp_dir, fn ->
-      function.()
-    end)
+  def in_tmp_dir(%{tmp_dir: tmp_dir}, function) do
+    try do
+      File.cd!(tmp_dir, fn ->
+        function.()
+      end)
+    after
+      File.rm_rf!(tmp_dir)
+    end
   end
 
   def in_tmp_project(%{tmp_dir: tmp_dir}, function) do
-    File.cd!(tmp_dir, fn ->
-      ~w(lib/my_app lib/my_app_web test/my_app test/my_app_web)
-      |> Enum.each(&File.mkdir_p!/1)
-      File.write!("mix.exs", mixfile_contents())
+    try do
+      File.cd!(tmp_dir, fn ->
+        ~w(lib/my_app lib/my_app_web test/my_app test/my_app_web)
+        |> Enum.each(&File.mkdir_p!/1)
 
-      Mix.Project.in_project(:my_app, tmp_dir, fn _module ->
-        function.()
+        File.write!("mix.exs", mixfile_contents())
+
+        Mix.Project.in_project(:my_app, tmp_dir, fn _module ->
+          function.()
+        end)
       end)
-    end)
+    after
+      File.rm_rf!(tmp_dir)
+    end
   end
 
   def assert_file(file) do
