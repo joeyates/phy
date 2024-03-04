@@ -1,16 +1,32 @@
-defmodule Mix.Tasks.Phy.Gen.HttpClient do
+defmodule Mix.Tasks.Phy.Gen.HTTPClient do
   @moduledoc "Generate an HTTP client module and accompanying tests"
 
+  alias Phy.Generator
   use Mix.Task
 
-  @generate_http_client Application.compile_env(
-                          :phy,
-                          :generate_http_client,
-                          Phy.Generate.HTTPClient
-                        )
+  @project_root Path.expand("../../..", __DIR__)
+  @templates_path Path.join([@project_root, "priv", "templates"])
+  @templates [
+    %{path: "lib/<%= @ app %>/http_client.ex", template: "http_client.ex.eex"},
+    %{path: "test/<%= @ app %>/http_client_test.exs", template: "http_client_test.exs.eex"}
+  ]
+  for %{template: template} <- @templates do
+    @external_resource Path.join(@templates_path, template)
+  end
 
-  @shortdoc "Creates a mockable HTTP client"
+  @doc false
   def run(_args) do
-    @generate_http_client.run()
+    context = %{
+      app: Phy.Mix.Project.app(),
+      module: Phy.Mix.Project.module()
+    }
+
+    @templates
+    |> Enum.each(fn %{path: path, template: template} ->
+      template_path = Path.join(@templates_path, template)
+      Generator.from_templates(path, template_path, context)
+    end)
+
+    :ok
   end
 end

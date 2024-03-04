@@ -1,5 +1,5 @@
-defmodule MockHTTPClient do
-  @behaviour #{module}.HTTPClient
+defmodule <%= @module %>.MockHTTPClient do
+  @behaviour <%= @module %>.HTTPClient
 
   def get("https://www.example.com") do
     {:ok, %Req.Response{status: 200, body: "Some HTML"}}
@@ -19,10 +19,10 @@ defmodule MockHTTPClient do
   def get(_url, _mock), do: nil
 end
 
-defmodule #{module}.HttpClientTest do
-  use #{module}.DataCase
+defmodule <%= @module %>.HttpClientTest do
+  use <%= @module %>.DataCase
 
-  alias #{module}.HTTPClient
+  alias <%= @module %>.HTTPClient
 
   test "get returns the body of the response" do
     {:ok, body} = HTTPClient.get("https://www.example.com", MockHTTPClient)
