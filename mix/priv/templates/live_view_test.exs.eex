@@ -1,0 +1,11 @@
+defmodule #{@web_module}.#{@live_view_module}Test do
+  use #{@web_module}.ConnCase
+
+  import Phoenix.LiveViewTest
+
+  test "presents a view", %{conn: conn} do
+    {:ok, _live, html} = live(conn, ~p"/")
+
+    assert html =~ "<%= @name %>"
+  end
+end

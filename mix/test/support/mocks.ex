@@ -1,6 +1,4 @@
 Mox.defmock(Phy.FileMock, for: Phy.File)
-Mox.defmock(Phy.Generate.LiveViewMock, for: Phy.Generate.LiveView)
 Mox.defmock(Phy.Generate.ReplyHelpersMock, for: Phy.Generate.ReplyHelpers)
 Mox.defmock(Phy.MixMock, for: Phy.Mix)
 Mox.defmock(Phy.Mix.ProjectMock, for: Phy.Mix.Project)
-Mox.defmock(Mix.ShellMock, for: Mix.Shell)

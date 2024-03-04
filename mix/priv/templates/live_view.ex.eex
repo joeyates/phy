@@ -1,4 +1,4 @@
-defmodule #{web_module}.#{live_view_name} do
+defmodule #{web_module}.#{live_view_module} do
   use #{web_module}, :live_view
 
   @impl true

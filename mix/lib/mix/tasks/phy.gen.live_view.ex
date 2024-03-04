@@ -3,18 +3,50 @@ defmodule Mix.Tasks.Phy.Gen.LiveView do
 
   use Mix.Task
 
-  @generate_live_view Application.compile_env(
-                          :phy,
-                          :generate_live_view,
-                          Phy.Generate.LiveView
-                        )
+  alias Phy.Generator
+
+  @project_root Path.expand("../../..", __DIR__)
+  @templates_path Path.join([@project_root, "priv", "templates"])
+  @templates [
+    %{path: "lib/<%= @ app %>_web/live/<%= @name %>_live.ex", template: "live_view.ex.eex"},
+    %{
+      path: "test/<%= @ app %>_web/live/<%= @name %>_live_test.exs",
+      template: "live_view_test.exs.eex"
+    }
+  ]
+  for %{template: template} <- @templates do
+    @external_resource Path.join(@templates_path, template)
+  end
 
   @shortdoc "Creates a new Phoenix LiveView module"
   def run([name]) do
-    @generate_live_view.run(name)
+    context = %{
+      app: Phy.Mix.Project.app(),
+      live_view_module: live_view_module(name),
+      web_module: Phy.Mix.Project.web_module(),
+      name: name
+    }
+
+    @templates
+    |> Enum.each(fn %{path: path, template: template} ->
+      template_path = Path.join(@templates_path, template)
+      Generator.from_templates(path, template_path, context)
+    end)
+
+    Mix.shell().info("""
+    Add the following route to your router:
+
+        live "/#{name}", #{live_view_module(name)}, :index
+    """)
+
+    :ok
   end
 
   def run(_args) do
     raise "Please supply a name for the LiveView"
+  end
+
+  defp live_view_module(name) do
+    "#{Macro.camelize(name)}Live"
   end
 end

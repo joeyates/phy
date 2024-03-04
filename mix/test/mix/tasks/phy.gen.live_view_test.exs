@@ -1,16 +1,50 @@
 defmodule Mix.Tasks.Phy.Gen.LiveViewTest do
   use ExUnit.Case, async: true
-  import Mox
 
-  setup :verify_on_exit!
+  import MixHelper
+  alias Mix.Tasks.Phy.Gen.LiveView
 
-  test "it runs the generator" do
-    expect(Phy.Generate.LiveViewMock, :run, fn "name" -> :ok end)
+  @moduletag :tmp_dir
 
-    Mix.Tasks.Phy.Gen.LiveView.run(["name"])
+  test "it creates the directory for the live_view", config do
+    in_tmp_project(config, fn ->
+      LiveView.run(["bar/name"])
+    end)
   end
 
-  test "when no name is supplied" do
+  test "it creates the live_view", config do
+    in_tmp_project(config, fn ->
+      LiveView.run(["bar/name"])
+    end)
+  end
+
+  test "it creates the directory for the test", config do
+    in_tmp_project(config, fn ->
+      LiveView.run(["bar/name"])
+    end)
+  end
+
+  test "it creates the test", config do
+    in_tmp_project(config, fn ->
+      LiveView.run(["bar/name"])
+    end)
+  end
+
+  test "it tells the user to add the route", config do
+    in_tmp_project(config, fn ->
+      LiveView.run(["bar/name"])
+
+      expected = """
+      Add the following route to your router:
+
+          live \"/bar/name\", Bar.NameLive, :index
+      """
+
+      assert_receive {:mix_shell, :info, [^expected]}
+    end)
+  end
+
+  test "fails when no name is supplied" do
     assert_raise RuntimeError, ~r[Please supply a name for the LiveView], fn ->
       Mix.Tasks.Phy.Gen.LiveView.run([])
     end
