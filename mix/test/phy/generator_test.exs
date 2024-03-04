@@ -1,35 +1,39 @@
 defmodule Phy.GeneratorTest do
   use ExUnit.Case, async: true
-  import Mox
 
-  setup :verify_on_exit!
+  import MixHelper
 
-  setup do
-    stub(Phy.FileMock, :mkdir_p, fn _ -> :ok end)
-    stub(Phy.FileMock, :write!, fn _, _ -> :ok end)
+  @moduletag :tmp_dir
 
-    :ok
-  end
+  describe "build/3" do
+    test "it returns ok", config do
+      in_tmp_project(config, fn ->
+        assert Phy.Generator.build("path", "template", %{}) == :ok
+      end)
+    end
 
-  test "it returns ok" do
-    assert Phy.Generator.run("path", "template", %{}) == :ok
-  end
+    test "it saves the file", config do
+      in_tmp_project(config, fn ->
+        Phy.Generator.build("path", "template", %{})
 
-  test "it saves the file" do
-    expect(Phy.FileMock, :write!, fn "path", "template" -> :ok end)
+        assert_file "path", "template"
+      end)
+    end
 
-    Phy.Generator.run("path", "template", %{})
-  end
+    test "it creates the file's directory", config do
+      in_tmp_project(config, fn ->
+        Phy.Generator.build("path/to/file", "template", %{})
 
-  test "it creates the file's directory" do
-    expect(Phy.FileMock, :mkdir_p, fn "path/to" -> :ok end)
+        assert_dir "path/to"
+      end)
+    end
 
-    Phy.Generator.run("path/to/file", "template", %{})
-  end
+    test "it processes the template via EEx", config do
+      in_tmp_project(config, fn ->
+        Phy.Generator.build("path", "<%= 1 + 1 %>", %{})
 
-  test "it processes the template via EEx" do
-    expect(Phy.FileMock, :write!, fn _, "2" -> :ok end)
-
-    assert Phy.Generator.run("path", "<%= 1 + 1 %>", %{}) == :ok
+        assert_file "path", "2"
+      end)
+    end
   end
 end
