@@ -7,13 +7,13 @@ defmodule Phy.GeneratorTest do
 
   describe "build/3" do
     test "it returns ok", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         assert Phy.Generator.build("path", "template content", %{}) == :ok
       end)
     end
 
     test "it saves the file", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         Phy.Generator.build("path", "template content", %{})
 
         assert_file "path", "template content"
@@ -21,7 +21,7 @@ defmodule Phy.GeneratorTest do
     end
 
     test "it creates the file's directory", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         Phy.Generator.build("path/to/file", "template content", %{})
 
         assert_dir "path/to"
@@ -29,7 +29,7 @@ defmodule Phy.GeneratorTest do
     end
 
     test "it processes the template via EEx", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         Phy.Generator.build("path", "<%= 1 + 1 %>", %{})
 
         assert_file "path", "2"
@@ -39,14 +39,14 @@ defmodule Phy.GeneratorTest do
 
   describe "from_templates/3" do
     test "it returns ok", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         File.write!("template_path", "template content")
         assert Phy.Generator.from_templates("output_path", "template_path", %{}) == :ok
       end)
     end
 
     test "it uses the template", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         File.write!("template_path", "template content")
         Phy.Generator.from_templates("output_path", "template_path", %{})
 
@@ -55,7 +55,7 @@ defmodule Phy.GeneratorTest do
     end
 
     test "it processes the output path via EEx", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         File.write!("template_path", "template content")
         Phy.Generator.from_templates("output_<%= @suffix %>", "template_path", %{suffix: "ciao"})
 
@@ -64,7 +64,7 @@ defmodule Phy.GeneratorTest do
     end
 
     test "it processes the template via EEx", config do
-      in_tmp_project(config, fn ->
+      in_tmp_dir(config, fn ->
         File.write!("template_path", "<%= 1 + 1 %>")
         Phy.Generator.from_templates("output_path", "template_path", %{})
 
