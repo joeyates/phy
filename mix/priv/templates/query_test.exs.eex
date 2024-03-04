@@ -1,0 +1,39 @@
+<%
+  params = Enum.map(@fields, fn {field, type} ->
+    case type do
+      "date" -> {field, ~D[2016-05-24]}
+      _ -> {field, "some #{field}"}
+    end
+  end)
+  |> Enum.into(%{})
+%>
+defmodule <%= @module %>.<%= @context %>.<%= @validator_module %>Test do
+  use <%= @module %>.DataCase
+
+  import <%= @module %>.<%= @context %>.<%= @validator_module %>
+
+  test "it returns a changeset" do
+    assert %Ecto.Changeset{} = changeset(<%= params |> inspect() %>)
+  end
+
+  test "the changeset is valid for valid data" do
+    assert changeset(<%= inspect(params) %>).valid?
+  end
+
+  <%= for {field, _type} <- @fields do %>
+  test "it requires a <%= field %>" do
+    changeset = changeset(<%= params |> Map.delete(field) |> inspect() %>)
+
+    assert {"can't be blank", [{:validation, :required}]} = changeset.errors[:<%= field %>]
+  end
+  <% end %>
+
+  <%= for {field, "date"} <- @fields do %>
+  test "it requires a valid <%= field %>" do
+    <% bad = params |> Map.put(field, "ciao") %>
+    changeset = changeset(<%= bad |> inspect() %>)
+
+    assert {"is invalid", [{:type, :date}, {:validation, :cast}]} = changeset.errors[:<%= field %>]
+  end
+  <% end %>
+end

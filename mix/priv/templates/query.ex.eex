@@ -1,0 +1,26 @@
+defmodule <%= @module %>.<%= @context %>.<%= @validator_module %> do
+  use Ecto.Schema
+
+  import Ecto.Changeset
+  <%= if @has_dates do %>
+  import EctoCommons.DateValidator
+  <% end %>
+
+  @primary_key false
+  embedded_schema do
+    <%= for {field, type} <- @fields do %>
+    field(:<%= field %>, :<%= type %>)
+    <% end %>
+  end
+
+  @fields ~w(<%= Enum.map(@fields, & elem(&1, 0)) |> Enum.join(" ") %>)a
+
+  def changeset(attrs) do
+    %__MODULE__{}
+    |> cast(attrs, @fields)
+    |> validate_required(@fields)
+    <%= for {field, "date"} <- @fields do %>
+    |> validate_date(:<%= field %>)
+    <% end %>
+  end
+end
