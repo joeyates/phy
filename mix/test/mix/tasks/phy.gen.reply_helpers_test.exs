@@ -1,5 +1,5 @@
 defmodule Mix.Tasks.Phy.Gen.ReplyHelpersTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import MixHelper
   alias Mix.Tasks.Phy.Gen.ReplyHelpers

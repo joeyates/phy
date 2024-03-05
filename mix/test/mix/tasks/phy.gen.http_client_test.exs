@@ -1,5 +1,5 @@
 defmodule Mix.Tasks.Phy.Gen.HTTPClientTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import MixHelper
   alias Mix.Tasks.Phy.Gen.HTTPClient

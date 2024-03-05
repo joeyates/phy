@@ -1,5 +1,5 @@
 defmodule Mix.Tasks.Phy.Gen.FormValidatorTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   import MixHelper
   alias Mix.Tasks.Phy.Gen.FormValidator
