@@ -3,19 +3,18 @@ defmodule Mix.Tasks.Phy.Gen.FormValidator do
 
   use Mix.Task
 
-  alias Phy.Generator
-
-  @templates_path Path.join([File.cwd!(), "priv", "templates"])
-  @templates [
-    %{path: "lib/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator.ex", template: "form_validator.ex.eex"},
-    %{
-      path: "test/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator_test.exs",
-      template: "form_validator_test.exs.eex"
-    }
-  ]
-  for %{template: template} <- @templates do
-    @external_resource Path.join(@templates_path, template)
-  end
+  use Phy.Generator,
+    templates: [
+      %{
+        path: "lib/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator.ex",
+        template: "form_validator.ex.eex"
+      },
+      %{
+        path:
+          "test/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator_test.exs",
+        template: "form_validator_test.exs.eex"
+      }
+    ]
 
   @shortdoc "Creates a new Phoenix form validator module"
   def run([context, name | raw_fields] = args) when length(args) >= 3 do
@@ -38,11 +37,7 @@ defmodule Mix.Tasks.Phy.Gen.FormValidator do
       validator_module: validator_module
     }
 
-    @templates
-    |> Enum.each(fn %{path: path, template: template} ->
-      template_path = Path.join(@templates_path, template)
-      Generator.from_templates(path, template_path, assigns)
-    end)
+    generate(assigns)
 
     Mix.shell().info("""
     Add the following to 'lib/app/#{downcased_context}.ex':
@@ -77,6 +72,8 @@ defmodule Mix.Tasks.Phy.Gen.FormValidator do
       end
       """)
     end
+
+    :ok
   end
 
   def run(_args) do
@@ -89,11 +86,12 @@ defmodule Mix.Tasks.Phy.Gen.FormValidator do
     |> Enum.map(fn
       [name, type] ->
         {name, type}
+
       _ ->
         raise """
         Fields should be in the format name:type
         """
-      end)
+    end)
   end
 
   defp has_date_field?(fields) do
