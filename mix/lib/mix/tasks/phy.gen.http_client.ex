@@ -4,8 +4,7 @@ defmodule Mix.Tasks.Phy.Gen.HTTPClient do
   alias Phy.Generator
   use Mix.Task
 
-  @project_root Path.expand("../../..", __DIR__)
-  @templates_path Path.join([@project_root, "priv", "templates"])
+  @templates_path Path.join([File.cwd!(), "priv", "templates"])
   @templates [
     %{path: "lib/<%= @ app %>/http_client.ex", template: "http_client.ex.eex"},
     %{path: "test/<%= @ app %>/http_client_test.exs", template: "http_client_test.exs.eex"}

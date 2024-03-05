@@ -5,8 +5,7 @@ defmodule Mix.Tasks.Phy.Gen.FormValidator do
 
   alias Phy.Generator
 
-  @project_root Path.expand("../../..", __DIR__)
-  @templates_path Path.join([@project_root, "priv", "templates"])
+  @templates_path Path.join([File.cwd!(), "priv", "templates"])
   @templates [
     %{path: "lib/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator.ex", template: "form_validator.ex.eex"},
     %{
