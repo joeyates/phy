@@ -1,5 +1,5 @@
-defmodule Mix.Tasks.Phy.Gen.Query do
-  @moduledoc "Generate a Phoenix Query module"
+defmodule Mix.Tasks.Phy.Gen.FormValidator do
+  @moduledoc "Generate a Phoenix form validator module"
 
   use Mix.Task
 
@@ -8,17 +8,17 @@ defmodule Mix.Tasks.Phy.Gen.Query do
   @project_root Path.expand("../../..", __DIR__)
   @templates_path Path.join([@project_root, "priv", "templates"])
   @templates [
-    %{path: "lib/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator.ex", template: "query.ex.eex"},
+    %{path: "lib/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator.ex", template: "form_validator.ex.eex"},
     %{
       path: "test/<%= @ app %>/<%= @downcased_context %>/validators/<%= @name %>_validator_test.exs",
-      template: "query_test.exs.eex"
+      template: "form_validator_test.exs.eex"
     }
   ]
   for %{template: template} <- @templates do
     @external_resource Path.join(@templates_path, template)
   end
 
-  @shortdoc "Creates a new Phoenix Query module"
+  @shortdoc "Creates a new Phoenix form validator module"
   def run([context, name | raw_fields] = args) when length(args) >= 3 do
     fields = parse_fields(raw_fields)
 
@@ -66,7 +66,7 @@ defmodule Mix.Tasks.Phy.Gen.Query do
 
     if has_dates do
       Mix.shell().info("""
-      As you have date fields in your query, date validations have been added.
+      As there are date fields, date validations have been added.
 
       Add this to mix.exs:
 
@@ -81,7 +81,7 @@ defmodule Mix.Tasks.Phy.Gen.Query do
   end
 
   def run(_args) do
-    raise "Please supply a Context, a name and at least one field for the Query"
+    raise "Please supply a Context, a name and at least one field"
   end
 
   defp parse_fields(fields) do
