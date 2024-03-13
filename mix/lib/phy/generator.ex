@@ -1,6 +1,7 @@
 defmodule Phy.Generator do
   defmacro __using__(opts) do
     templates = opts[:templates]
+
     quote do
       alias Phy.Generator
 
@@ -18,7 +19,6 @@ defmodule Phy.Generator do
           Generator.from_templates(path, template_path, assigns)
         end)
       end
-
     end
   end
 

@@ -5,12 +5,12 @@ defmodule Mix.Tasks.Phy.Gen.ReplyHelpers do
 
   use Phy.Generator,
     templates: [
-    %{path: "lib/<%= @ app %>_web/reply_helpers.ex", template: "reply_helpers.ex.eex"},
-    %{
-      path: "test/<%= @ app %>_web/reply_helpers_test.exs",
-      template: "reply_helpers_test.exs.eex"
-    }
-  ]
+      %{path: "lib/<%= @ app %>_web/reply_helpers.ex", template: "reply_helpers.ex.eex"},
+      %{
+        path: "test/<%= @ app %>_web/reply_helpers_test.exs",
+        template: "reply_helpers_test.exs.eex"
+      }
+    ]
 
   @shortdoc "Creates reply helpers"
   def run(_args) do

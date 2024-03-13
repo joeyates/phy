@@ -18,7 +18,8 @@ defmodule Mix.Tasks.Phy.Gen.ReplyHelpersTest do
     in_tmp_project(config, fn ->
       ReplyHelpers.run([])
 
-      assert_file "test/my_app_web/reply_helpers_test.exs", ~r/defmodule MyAppWeb.ReplyHelpersTest/
+      assert_file "test/my_app_web/reply_helpers_test.exs",
+                  ~r/defmodule MyAppWeb.ReplyHelpersTest/
     end)
   end
 end

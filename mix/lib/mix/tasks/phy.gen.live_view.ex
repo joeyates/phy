@@ -5,12 +5,12 @@ defmodule Mix.Tasks.Phy.Gen.LiveView do
 
   use Phy.Generator,
     templates: [
-    %{path: "lib/<%= @ app %>_web/live/<%= @name %>_live.ex", template: "live_view.ex.eex"},
-    %{
-      path: "test/<%= @ app %>_web/live/<%= @name %>_live_test.exs",
-      template: "live_view_test.exs.eex"
-    }
-  ]
+      %{path: "lib/<%= @ app %>_web/live/<%= @name %>_live.ex", template: "live_view.ex.eex"},
+      %{
+        path: "test/<%= @ app %>_web/live/<%= @name %>_live_test.exs",
+        template: "live_view_test.exs.eex"
+      }
+    ]
 
   @shortdoc "Creates a new Phoenix LiveView module"
   def run([name]) do

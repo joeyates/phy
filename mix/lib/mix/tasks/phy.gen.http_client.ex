@@ -5,9 +5,9 @@ defmodule Mix.Tasks.Phy.Gen.HTTPClient do
 
   use Phy.Generator,
     templates: [
-    %{path: "lib/<%= @ app %>/http_client.ex", template: "http_client.ex.eex"},
-    %{path: "test/<%= @ app %>/http_client_test.exs", template: "http_client_test.exs.eex"}
-  ]
+      %{path: "lib/<%= @ app %>/http_client.ex", template: "http_client.ex.eex"},
+      %{path: "test/<%= @ app %>/http_client_test.exs", template: "http_client_test.exs.eex"}
+    ]
 
   @doc false
   def run(_args) do

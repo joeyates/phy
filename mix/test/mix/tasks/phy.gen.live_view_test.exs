@@ -34,7 +34,8 @@ defmodule Mix.Tasks.Phy.Gen.LiveViewTest do
     in_tmp_project(config, fn ->
       LiveView.run(["bar/name"])
 
-      assert_file "test/my_app_web/live/bar/name_live_test.exs", ~r[defmodule MyAppWeb.Bar.NameLiveTest do]
+      assert_file "test/my_app_web/live/bar/name_live_test.exs",
+                  ~r[defmodule MyAppWeb.Bar.NameLiveTest do]
     end)
   end
 
