@@ -19,6 +19,7 @@ end
 
 * `phy.gen.http_client`
 * `phy.gen.live_view`
+* `phy.gen.reply_helpers`
 
 # Name
 
